@@ -1,6 +1,12 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:2000/api';
+// Base API URL: reads from VITE_API_URL environment variable, with fallback to your server URL
+let rawBaseUrl = import.meta.env.VITE_API_URL || 'http://64.225.85.224:2000/api';
+// Automatically ensure the endpoint ends with /api
+if (!rawBaseUrl.endsWith('/api') && !rawBaseUrl.endsWith('/api/')) {
+  rawBaseUrl = rawBaseUrl.replace(/\/+$/, '') + '/api';
+}
+const API_BASE_URL = rawBaseUrl;
 
 
 export const apiClient = axios.create({
